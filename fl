@@ -24,6 +24,7 @@ print contents of the list: fl listname
 operations on the list:     fl listname [operation] ...
 
 Operations:
+    -h, --help      print this usage
     -a, --append    append lines from the standart input to the list
     -c, --clear     clear the list
 
