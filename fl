@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 require 'getoptlong'
 
+VERSION = "0.1"
+
 def append(list)
 	$stderr.puts "appending to the #{list}"
 end
@@ -9,12 +11,24 @@ def clear(list)
 	$stderr.puts "clearing the #{list}"
 end
 
-def print_usage
-	$stderr.puts "printing usage..."
-end
-
 def list_contents(list)
 	$stderr.puts "listing contents of the #{list}"
+end
+
+def print_usage
+	$stderr.puts <<-EOF
+fancylists v.#{VERSION}
+
+Usage:
+print contents of the list: fl listname
+operations on the list:     fl listname [operation] ...
+
+Operations:
+    -a, --append    append lines from the standart input to the list
+    -c, --clear     clear the list
+
+Operations executed in the order of appearance
+EOF
 end
 
 
@@ -47,10 +61,6 @@ def driver
 			clear(list_name)
 		end
 	}
-
-	if (ARGV.length != 0)
-		print_usage
-	end
 end
 
 begin
