@@ -1,10 +1,15 @@
 #!/usr/bin/env ruby
 require 'getoptlong'
 
-VERSION = "0.1"
+VERSION = "0.2"
+STORAGE = "#{ENV["HOME"]}.fl"
 
 def append(list)
-	$stderr.puts "appending to the #{list}"
+	file = File.open(get_path(list), "a")
+	while (!$stdin.eof?)
+		file.print($stdin.gets)
+	end
+	file.close
 end
 
 def clear(list)
@@ -13,6 +18,10 @@ end
 
 def list_contents(list)
 	$stderr.puts "listing contents of the #{list}"
+end
+
+def get_path(list)
+	return File.join(STORAGE, list)
 end
 
 def print_usage
