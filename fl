@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 require 'getoptlong'
-require 'fileutils'
 
 VERSION = "0.2"
 STORAGE = "#{ENV["HOME"]}.fl"
@@ -16,7 +15,7 @@ end
 def clear(list)
 	file = get_path(list)
 	if (File.exist?(file))
-		FileUtils.rm(file)
+		File.delete(file)
 	end
 end
 
