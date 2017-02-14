@@ -29,6 +29,12 @@ def list_contents(list)
 	end
 end
 
+def print_lists
+	Dir.foreach(STORAGE) { |f|
+		puts(f) if (!f.match(/^\./)) # skip dot files
+	}
+end
+
 def get_path(list)
 	return File.join(STORAGE, list)
 end
@@ -38,8 +44,9 @@ def print_usage
 fancylists v.#{VERSION}
 
 Usage:
-print contents of the list: fl listname
-operations on the list:     fl listname [operation] ...
+print available non-empty lists: fl
+print contents of the list:      fl listname
+operations on the list:          fl listname [operation] ...
 
 Operations:
     -h, --help      print this usage
@@ -54,7 +61,7 @@ def driver
 	list_name = nil
 	case (ARGV.length)
 	when 0
-		print_usage
+		print_lists
 		return
 	when 1
 		if (!ARGV[0].match(/^-/))
