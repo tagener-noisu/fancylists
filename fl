@@ -86,6 +86,10 @@ def driver
 			clear(list_name)
 		end
 	}
+
+	if (ARGV.length != 0)
+		print_usage
+	end
 end
 
 begin
