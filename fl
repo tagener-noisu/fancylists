@@ -57,7 +57,13 @@ Operations executed in the order of appearance
 EOF
 end
 
+def init
+	Dir.mkdir(STORAGE) if !Dir.exist?(STORAGE)
+end
+
 def driver
+	init
+
 	list_name = nil
 	case (ARGV.length)
 	when 0
