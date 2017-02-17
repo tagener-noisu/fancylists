@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require 'getoptlong'
 
-VERSION = "0.2"
+VERSION = "0.3"
 STORAGE = "#{ENV["HOME"]}.fl"
 
 def append(list)
@@ -81,21 +81,32 @@ def driver
 		list_name = ARGV.shift
 	end
 
+	operations = []
 	GetoptLong.new(
 		['--append', '-a', GetoptLong::NO_ARGUMENT],
 		['--clear', '-c', GetoptLong::NO_ARGUMENT]
 	).each { |opt, arg|
 		case (opt)
 		when "--append"
-			append(list_name)
+			operations << :append
 		when "--clear"
-			clear(list_name)
+			operations << :clear
 		end
 	}
 
 	if (ARGV.length != 0)
 		print_usage
+		exit
 	end
+
+	operations.each { |op|
+		case (op)
+		when :append
+			append(list_name)
+		when :clear
+			clear(list_name)
+		end
+	}
 end
 
 begin
