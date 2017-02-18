@@ -46,9 +46,9 @@ fancylists v.#{VERSION}
 Usage:
 print available non-empty lists: fl
 print contents of the list:      fl listname
-operations on the list:          fl listname [operation] ...
+operations on the list:          fl listname [option] ...
 
-Operations:
+Options:
     -h, --help      print this usage
     -a, --append    append lines from the standard input to the list
     -c, --clear     clear the list
