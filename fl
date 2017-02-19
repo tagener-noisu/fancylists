@@ -1,8 +1,25 @@
 #!/usr/bin/env ruby
+require 'fileutils'
 require 'getoptlong'
 
 VERSION = "0.3"
 STORAGE = "#{ENV["HOME"]}.fl"
+
+class File
+    def File.lock(file)
+        return if !block_given?
+        path = File.expand_path(file).split("/")
+        f = path.pop
+        path = path.join("/")
+        Dir.chdir(path) {
+            lock = f + ".lock"
+            sleep(0.1) while (File.exist?(lock))    # wait for unlock
+            FileUtils.touch(lock)                   # lock
+            yield                                   # execute
+            FileUtils.rm(lock)                      # unlock
+        }
+    end
+end
 
 def append(list)
 	file = File.open(get_path(list), "a")
@@ -31,7 +48,9 @@ end
 
 def print_lists
 	Dir.foreach(STORAGE) { |f|
-		puts(f) if (!f.match(/^\./)) # skip dot files
+		if (!f.match(/^\./) && !f.match(/\.lock$/)) # skip dot files and locks
+			puts(f)
+		end
 	}
 end
 
@@ -99,13 +118,15 @@ def driver
 		exit
 	end
 
-	operations.each { |op|
-		case (op)
-		when :append
-			append(list_name)
-		when :clear
-			clear(list_name)
-		end
+	File.lock(get_path(list_name)) {
+		operations.each { |op|
+			case (op)
+			when :append
+				append(list_name)
+			when :clear
+				clear(list_name)
+			end
+		}
 	}
 end
 
