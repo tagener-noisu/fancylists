@@ -2,23 +2,24 @@
 require 'fileutils'
 require 'getoptlong'
 
-VERSION = "1.0"
+VERSION = "1.0.1"
+
 STORAGE = "#{ENV["HOME"]}.fl"
 
 class File
-    def File.lock(f)
-        return if !block_given?
-        path = File.expand_path(f).split("/")
-        file = path.pop
-        path = path.join("/")
-        Dir.chdir(path) {
-            lock = file + ".lock"
-            sleep(0.1) while (File.exist?(lock))    # wait for unlock
-            FileUtils.touch(lock)                   # lock
-            yield                                   # execute
-            FileUtils.rm(lock)                      # unlock
-        }
-    end
+	def File.lock(f)
+		return if !block_given?
+		path = File.expand_path(f).split("/")
+		file = path.pop
+		path = path.join("/")
+		Dir.chdir(path) {
+			lock = file + ".lock"
+			sleep(0.1) while (File.exist?(lock))	# wait for unlock
+			FileUtils.touch(lock)				   # lock
+			yield								   # execute
+			FileUtils.rm(lock)					  # unlock
+		}
+	end
 end
 
 def append(list)
