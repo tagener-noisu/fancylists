@@ -30,10 +30,10 @@ class File
 		path = path.join("/")
 		Dir.chdir(path) {
 			lock = file + ".lock"
-			sleep(0.1) while (File.exist?(lock))	# wait for unlock
-			FileUtils.touch(lock)				   # lock
-			yield								   # execute
-			FileUtils.rm(lock)					  # unlock
+			sleep(0.1) while (File.exist?(lock))
+			FileUtils.touch(lock)
+			yield
+			FileUtils.rm(lock)
 		}
 	end
 end
