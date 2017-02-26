@@ -41,10 +41,11 @@ end
 def list_contents(list)
 	file = get_path(list)
 	if (File.exist?(file))
-		f = File.open(file, "r")
-		f.each_line { |l|
-			$stdout.print(l)
-		}
+		f = File.open(file, "r") { |f|
+            f.each_line { |l|
+                $stdout.print(l)
+            }
+        }
 	end
 end
 
