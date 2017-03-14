@@ -135,7 +135,8 @@ def driver
 		['--list', '-l', GetoptLong::NO_ARGUMENT],
 		['--append', '-a', GetoptLong::NO_ARGUMENT],
 		['--pop', '-p', GetoptLong::NO_ARGUMENT],
-		['--clear', '-c', GetoptLong::NO_ARGUMENT]
+		['--clear', '-c', GetoptLong::NO_ARGUMENT],
+		['--help', '-h', GetoptLong::NO_ARGUMENT]
 	).each { |opt, arg|
 		case (opt)
         when "--list"
@@ -146,6 +147,9 @@ def driver
 			operations << :pop
 		when "--clear"
 			operations << :clear
+		when "--help"
+			print_usage
+			return
 		end
 	}
 
