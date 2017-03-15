@@ -18,7 +18,7 @@
 require 'fileutils'
 require 'getoptlong'
 
-VERSION = "1.1.3"
+VERSION = "1.1.4"
 
 STORAGE = "#{ENV["HOME"]}.fl"
 
@@ -68,6 +68,17 @@ def pop(list)
 	$stdout.print(lines.shift)
 end
 
+def shift(list)
+	file = get_path(list)
+	lines = File.readlines(file)
+	$stdout.print(lines.shift)
+	File.open(file, "w") { |f|
+		(lines.length).times {
+			f.print(lines.shift)
+		}
+	}
+end
+
 def clear(list)
 	file = get_path(list)
 	if (File.exist?(file))
@@ -103,7 +114,8 @@ Options:
     -h, --help      print this usage
     -l, --list      print contents of the list
     -a, --append    append lines from the standard input to the list
-    -p, --pop       pop one line from the list and print it
+    -p, --pop       pop one line from the back of the list and print it
+    -s, --shift     shift one line from the front of the list and print it
     -c, --clear     clear the list
 
 Operations executed in the order of appearance
@@ -135,6 +147,7 @@ def driver
 		['--list', '-l', GetoptLong::NO_ARGUMENT],
 		['--append', '-a', GetoptLong::NO_ARGUMENT],
 		['--pop', '-p', GetoptLong::NO_ARGUMENT],
+		['--shift', '-s', GetoptLong::NO_ARGUMENT],
 		['--clear', '-c', GetoptLong::NO_ARGUMENT],
 		['--help', '-h', GetoptLong::NO_ARGUMENT]
 	).each { |opt, arg|
@@ -145,6 +158,8 @@ def driver
 			operations << :append
 		when "--pop"
 			operations << :pop
+		when "--shift"
+			operations << :shift
 		when "--clear"
 			operations << :clear
 		when "--help"
@@ -167,6 +182,8 @@ def driver
 				append(list_name)
 			when :pop
 				pop(list_name)
+			when :shift
+				shift(list_name)
 			when :clear
 				clear(list_name)
 			end
