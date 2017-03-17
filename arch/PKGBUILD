@@ -1,0 +1,22 @@
+# Maintainer: tagener-noisu <op4.renegat@gmail.com>
+
+pkgname=fancylists
+pkgver=1.1.5
+pkgrel=1
+pkgdesc="A simple tool for handling lists"
+arch=('any')
+license=('GPL')
+depends=('ruby>=2.0')
+source=("fl")
+md5sums=('SKIP')
+
+pkgver(){
+  grep "VERSION =" fl | grep -Po "(\d\.)+\d"
+}
+
+package() {
+  install -m755 -D fl "$pkgdir/usr/bin/fl"
+  #install -m644 -D README "$pkgdir/usr/share/doc/$pkgname/README"
+}
+
+# vim:ts=2:sts=2:sw=0:et:
