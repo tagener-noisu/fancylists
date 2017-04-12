@@ -18,9 +18,9 @@
 require 'fileutils'
 require 'getoptlong'
 
-VERSION = "1.1.5"
+VERSION = "1.1.6"
 
-STORAGE = "#{ENV["HOME"]}.fl"
+STORAGE = "#{ENV["HOME"]}.local/share/fancylists"
 
 class File
 	def File.lock(f)
