@@ -1,7 +1,7 @@
 # Maintainer: tagener-noisu <op4.renegat@gmail.com>
 
 pkgname=fancylists
-pkgver=1.1.5
+pkgver=1.1.6
 pkgrel=1
 pkgdesc="A simple tool for handling lists"
 arch=('any')
